@@ -1,0 +1,78 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.banner{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url("img.url");
+    background-size: cover;
+    background-position: center;
+}
+.navbar{
+    width: 85%;
+    margin-top: auto;
+    padding: 35px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-attachment: fixed;
+    background-position: fixed;
+}
+.logo{
+    width: 120px;
+    cursor: pointer;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+.navbar ul li a {
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+}
+.navbar ul li::after{
+    content: ' ';
+    height: 5px;
+    width: 0;
+    background: navy;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+navbar ul li:hover::after{
+    width: 100%;
+}
+.content{
+    width: 100%;
+    position: absolute;
+    top: 35%;
+    transform: translateY(-50);
+    text-align: center;
+    color: black;
+}
+.content h1{
+    font-size: 70px;
+    margin-top: 20px;
+}
+.contentp{
+    margin: 20px auto;
+    font-weight: 100%;
+    line-height: 25px;
+}
+button{
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    background: -moz-linear-gradient(20);
+    color: black;
+    cursor: pointer;
+    margin: 20px 10px;
+    border-radius: 25px;
+    border: 3px solid yellow;
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applying for TC Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+        }
+
+        .letter-container {
+            background-color: white;
+            padding: 20px; /* Reduced padding */
+            max-width: 595px; /* A4 width in pixels */
+            margin: 0 auto; /* Center the letter */
+        }
+
+        .header p {
+            margin: 5px 0;
+        }
+
+        .subject {
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        .content {
+            text-indent: 30px;
+            margin-bottom: 20px;
+        }
+
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+        }
+
+        .download-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="letter-content" class="letter-container">
+        <div class="header">
+            <p><span id="result"></span>,</p>
+            <p><span id="result1"></span>,</p>
+            <p><span id="result3"></span>,</p>
+            <p>Aditya Degree College,</p>
+            <p>Kakinada.</p>
+        </div>
+
+        <p>Date: <span id="result5"></span></p>
+
+        <div class="header">
+            <p>To,</p>
+            <p>The Principal,</p>
+            <p>Aditya Degree College,</p>
+            <p>Kakinada.</p>
+        </div>
+
+        <p>Respected Sir/Madam,</p>
+
+        <p class="subject">Subject: Request for the Issue of Transfer, Bonafide, and Conduct Certificates</p>
+
+        <p class="content">
+            I was a student of your college during the academic years <span id="result6"></span> to <span id="result7"></span>. My roll number was <span id="result4"></span>. I have successfully completed this degree course with <span id="result8"></span> grade points.
+        </p>
+        <p class="content">
+            I kindly request you to issue my Transfer, Bonafide, and Conduct certificates at the earliest. I have already submitted the No-Due certificate.
+        </p>
+
+        <p>Thanking you.</p>
+
+        <div class="signature">
+            <p>Yours faithfully,</p>
+            <p><span id="result9"></span></p>
+        </div>
+    </div>
+
+    <button id="download-pdf" class="download-btn">Download PDF</button>
+
+    <script>
+        // Populate the letter content dynamically from localStorage
+        document.getElementById("result").innerHTML = localStorage.getItem("textvalue");
+        document.getElementById("result1").innerHTML = localStorage.getItem("textvalue1");
+        document.getElementById("result3").innerHTML = localStorage.getItem("textvalue3");
+        document.getElementById("result4").innerHTML = localStorage.getItem("textvalue4");
+        document.getElementById("result5").innerHTML = localStorage.getItem("textvalue5");
+        document.getElementById("result6").innerHTML = localStorage.getItem("textvalue6");
+        document.getElementById("result7").innerHTML = localStorage.getItem("textvalue7");
+        document.getElementById("result8").innerHTML = localStorage.getItem("textvalue8");
+        document.getElementById("result9").innerHTML = localStorage.getItem("textvalue9");
+
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('letter-content');
+
+            // A4 dimensions and margins
+            const a4Width = 595.28;  // A4 width in points
+            const a4Height = 841.89; // A4 height in points
+            const margin = 40;  // 0.5 inches = 40 points
+
+            html2canvas(element, { 
+                scale: 2,
+                useCORS: true,
+                allowTaint: true,
+                logging: true 
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'pt',
+                    format: 'a4'
+                });
+
+                // Calculate the width and height to fit within margins
+                const imgWidth = a4Width - (2 * margin);
+                const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+                // Add image with margins
+                pdf.addImage(
+                    imgData, 
+                    'PNG', 
+                    margin,   // x-position (left margin)
+                    margin,   // y-position (top margin)
+                    imgWidth, 
+                    imgHeight
+                );
+
+                pdf.save('tc_application_letter.pdf');
+            });
+        });
+    </script>
+</body>
+</html>

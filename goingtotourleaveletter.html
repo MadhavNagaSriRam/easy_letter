@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Going to Tour Leave Letter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <!-- Include both libraries correctly -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f6f9;
+        }
+        .letter-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .header p {
+            margin: 5px 0;
+        }
+        .subject {
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .content {
+            text-indent: 30px;
+            margin-bottom: 20px;
+        }
+        .signature {
+            margin-top: 40px;
+            text-align: right;
+        }
+        .download-btn {
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div id="letter-content" class="letter-container">
+        <div class="header">
+            <p>To,</p>
+            <p>The Principal,</p>
+            <p>Aditya Degree College,</p>
+            <p>Kakinada.</p>
+        </div>
+
+        <p>Date: <span id="result7"></span></p>
+
+        <p>Respected Sir/Madam,</p>
+
+        <p class="subject">SUBJECT: Application for Leave Letter</p>
+
+        <p class="content">
+            I want to travel out of station, and I request <span id="result6"></span> days leave to go to <span id="result10"></span> from <span id="result8"></span> to <span id="result9"></span>. This is required for me to travel due to <span id="result"></span>. Kindly accept my leave application.
+        </p>
+
+        <p>Thanking you.</p>
+
+        <div class="signature">
+            <p>Yours obediently,</p>
+            <p><span id="result1"></span>,</p>
+            <p><span id="result2"></span> <span id="result3"></span>,</p>
+            <p><span id="result5"></span>.</p>
+        </div>
+    </div>
+
+    <button id="download-pdf" class="download-btn">Download PDF</button>
+
+    <script>
+        // Function to safely get localStorage item
+        function getSafeLocalStorageItem(key) {
+            try {
+                return localStorage.getItem(key) || '';
+            } catch (error) {
+                console.error('Error accessing localStorage:', error);
+                return '';
+            }
+        }
+
+        // Populate the letter content dynamically from localStorage
+        const elementIds = [
+            'result', 'result1', 'result2', 'result3', 'result5', 
+            'result6', 'result7', 'result8', 'result9', 'result10'
+        ];
+
+        elementIds.forEach(id => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.innerHTML = getSafeLocalStorageItem(`textvalue${id.replace('result', '') || ''}`);
+            }
+        });
+
+        // PDF Download functionality
+        document.getElementById('download-pdf').addEventListener('click', function() {
+            // Use the imported jsPDF
+            const { jsPDF } = window.jspdf;
+            const element = document.getElementById('letter-content');
+
+            // Improved error handling and logging
+            try {
+                html2canvas(element, { 
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    logging: false 
+                }).then(canvas => {
+                    const imgData = canvas.toDataURL('image/png');
+                    const pdf = new jsPDF({
+                        orientation: 'portrait',
+                        unit: 'pt',
+                        format: 'a4'
+                    });
+
+                    // A4 dimensions
+                    const a4Width = 595.28;  
+                    const margin = 40;  
+
+                    // Calculate image dimensions
+                    const imgWidth = a4Width - (2 * margin);
+                    const imgHeight = canvas.height * (imgWidth / canvas.width);
+
+                    // Add image to PDF
+                    pdf.addImage(
+                        imgData, 
+                        'PNG', 
+                        margin,   
+                        margin,   
+                        imgWidth, 
+                        imgHeight
+                    );
+
+                    // Save PDF
+                    pdf.save('leave_application_letter.pdf');
+                }).catch(err => {
+                    console.error('HTML2Canvas Error:', err);
+                    alert('Failed to generate PDF. Please try again.');
+                });
+            } catch (error) {
+                console.error('PDF Generation Error:', error);
+                alert('An error occurred while generating the PDF.');
+            }
+        });
+    </script>
+</body>
+</html>

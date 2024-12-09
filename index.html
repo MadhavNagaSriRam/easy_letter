@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Letter - Template Selector</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --background-color: #f4f6f9;
+            --card-background: white;
+            --text-primary: #1a1a2e;
+            --text-secondary: #4b4b6a;
+            --accent-color: #6366f1;
+            --hover-color: #4338ca;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: var(--text-primary);
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.2);
+        }
+
+        .letter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .letter-btn {
+            display: block;
+            text-decoration: none;
+            padding: 15px 20px;
+            background-color: var(--card-background);
+            color: var(--text-primary);
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .letter-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 6px 12px rgba(99, 102, 241, 0.2);
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .letter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo-container">
+            <img src="./BG3.jpg" alt="Easy Letter Logo" class="logo">
+        </div>
+        <div class="header">
+            <h1>Easy Letter</h1>
+            <p>Select a letter template to get started</p>
+        </div>
+        <div class="letter-grid">
+            <a href="./healthissue.html" class="letter-btn">Health Issue Letter</a>
+            <a href="./goingtotour.html" class="letter-btn">Going to Tour Letter</a>
+            <a href="./permissionletter.html" class="letter-btn">Permission Letter</a>
+            <a href="./applyingtc.html" class="letter-btn">Applying T.C Letter</a>
+            <a href="./seatcancellation.html" class="letter-btn">Seat Cancellation Letter</a>
+        </div>
+    </div>
+</body>
+</html>
